@@ -1,0 +1,22 @@
+{
+  "scenario": {
+    "name": "Tampered signed capability",
+    "duration": 180,
+    "revoke_at": 40,
+    "token_ttl": 120,
+    "lease_seconds": 20,
+    "step": 2,
+    "devices": [
+      {
+        "id": "tampered-client",
+        "outages": [
+          [
+            10,
+            150
+          ]
+        ],
+        "tamper": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "scenario": {
+    "name": "The unavoidable offline revocation gap",
+    "duration": 180,
+    "revoke_at": 12,
+    "token_ttl": 120,
+    "lease_seconds": 30,
+    "step": 2,
+    "devices": [
+      {
+        "id": "field-tablet",
+        "outages": [
+          [
+            10,
+            150
+          ]
+        ]
+      },
+      {
+        "id": "desk-client",
+        "outages": []
+      }
+    ]
+  }
+}

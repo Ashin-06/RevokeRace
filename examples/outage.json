@@ -1,0 +1,25 @@
+{
+  "scenario": {
+    "name": "Revocation during an outage",
+    "duration": 180,
+    "revoke_at": 40,
+    "token_ttl": 120,
+    "lease_seconds": 20,
+    "step": 2,
+    "devices": [
+      {
+        "id": "field-tablet",
+        "outages": [
+          [
+            10,
+            150
+          ]
+        ]
+      },
+      {
+        "id": "desk-client",
+        "outages": []
+      }
+    ]
+  }
+}

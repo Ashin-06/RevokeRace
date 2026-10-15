@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "outage",
+    "devices": 2,
+    "decisions": 546,
+    "cached_stale": 40,
+    "lease_stale": 0,
+    "online_stale": 0,
+    "lease_seconds": 20
+  },
+  {
+    "scenario": "rollback",
+    "devices": 1,
+    "decisions": 273,
+    "cached_stale": 70,
+    "lease_stale": 0,
+    "online_stale": 0,
+    "lease_seconds": 15
+  },
+  {
+    "scenario": "offline-gap",
+    "devices": 2,
+    "decisions": 546,
+    "cached_stale": 54,
+    "lease_stale": 13,
+    "online_stale": 0,
+    "lease_seconds": 30
+  },
+  {
+    "scenario": "tamper",
+    "devices": 1,
+    "decisions": 273,
+    "cached_stale": 0,
+    "lease_stale": 0,
+    "online_stale": 0,
+    "lease_seconds": 20
+  }
+]

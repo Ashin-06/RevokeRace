@@ -1,0 +1,23 @@
+{
+  "scenario": {
+    "name": "Clock rollback extends cached authority",
+    "duration": 180,
+    "revoke_at": 40,
+    "token_ttl": 90,
+    "lease_seconds": 15,
+    "step": 2,
+    "devices": [
+      {
+        "id": "rollback-client",
+        "outages": [
+          [
+            10,
+            180
+          ]
+        ],
+        "rollback_at": 60,
+        "rollback_seconds": 120
+      }
+    ]
+  }
+}
