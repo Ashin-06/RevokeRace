@@ -1,4 +1,5 @@
 import copy
+import random
 import unittest
 
 from revokerace import engine
@@ -6,6 +7,46 @@ from revokerace.capability import authenticate, mint
 
 
 class RevocationTests(unittest.TestCase):
+    def test_generated_schedules_obey_revocation_and_expiry_invariants(self):
+        rng = random.Random(20261015)
+        for case in range(100):
+            request = self.preset("outage")
+            scenario = request["scenario"]
+            scenario.update(
+                duration=60,
+                step=1,
+                revoke_at=rng.randrange(61),
+                token_ttl=rng.randrange(1, 100),
+                lease_seconds=rng.randrange(31),
+            )
+            start = rng.randrange(50)
+            scenario["devices"] = [
+                {
+                    "id": "generated",
+                    "outages": [[start, rng.randrange(start + 1, 62)]],
+                    "offset": rng.randrange(-30, 31),
+                    "rollback_at": rng.randrange(61),
+                    "rollback_seconds": rng.randrange(121),
+                }
+            ]
+            result = engine.execute(request)
+            for event in result["events"]:
+                with self.subTest(
+                    case=case, time=event["time"], policy=event["policy"]
+                ):
+                    if event["policy"] == "online_only" and event["stale_grant"]:
+                        self.fail("Online enforcement accepted revoked authority")
+                    if event["policy"] == "bounded_lease" and event["allowed"]:
+                        self.assertLess(event["time"], scenario["token_ttl"])
+                        if not event["online"]:
+                            self.assertLess(
+                                event["contact_age"], scenario["lease_seconds"]
+                            )
+                    self.assertEqual(
+                        event["stale_grant"],
+                        event["allowed"] and event["time"] >= scenario["revoke_at"],
+                    )
+
     def preset(self, ident):
         return copy.deepcopy(
             next(p["input"] for p in engine.presets() if p["id"] == ident)
